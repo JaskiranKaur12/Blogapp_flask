@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,render_template
 
 
 app= Flask(__name__)
@@ -19,7 +19,10 @@ def home():
 @app.route("/post/<int:post_id>") #post/0
 def post(post_id):
     post=posts.get(post_id)
-    return f"Post {post['title']}, content:\n\n {post['content']}"
+    if not post:# If the get method do not get anything it return none
+       return render_template('404.html', message=f"No Post exists with id {post_id}")
+    return render_template('post.html', post=post)
+
 
 
 if __name__=="__main__":
