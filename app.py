@@ -1,4 +1,4 @@
-from flask import Flask,render_template
+from flask import Flask,render_template,request,redirect,url_for
 
 
 app= Flask(__name__)
@@ -24,6 +24,21 @@ def post(post_id):
     return render_template('post.html', post=post)
 
 
+
+@app.route('/post/create',methods=['POST','GET'])
+def create():
+    #post attaches the data payload to the request instead of adding in the query string
+    #get request can not have data payload-done by browser
+    if request.method=='POST':
+        title=request.form.get('title')
+        print(title)
+        content=request.form.get('content')
+        print(content)
+        post_id=len(posts)
+        posts[post_id]={'title': title,
+                        'content': content}
+        return redirect(url_for('post', post_id=post_id))
+    return render_template('create.html')
 
 if __name__=="__main__":
       app.run(debug=True)#gives information if something go wrong
