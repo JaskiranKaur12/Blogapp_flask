@@ -14,7 +14,7 @@ posts={
 @app.route("/")# always home page...this decorator will work on this Function
 #User run the app and browser asks for home page and run function associate with a particular route
 def home():
-    return "Hello, My name is Jaskiran!"#Flask endpoint
+    return render_template('home.html', post=posts)#Flask endpoint
 
 @app.route("/post/<int:post_id>") #post/0
 def post(post_id):
